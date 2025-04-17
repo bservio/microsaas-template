@@ -12,10 +12,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Price not found" }, { status: 500 })
   }
 
-  const metadata = {
-    testId,
-    price
-  }
+  
 
   const session = await auth();
   const userId = session?.user?.id;
@@ -23,6 +20,12 @@ export async function POST(req: NextRequest) {
 
   if (!userId || !userEmail) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  const metadata = {
+    testId,
+    price,
+    userId,
   }
 
   const costumerId = await getOrCreateCostumer(userId, userEmail);
